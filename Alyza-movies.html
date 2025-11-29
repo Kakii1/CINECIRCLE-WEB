@@ -259,7 +259,8 @@
 
     <div class="video-section">
       <div class="video-player">
-        <video id="moviePreview" width="100%" height="100%" controls autoplay loop>
+
+        <video id="moviePreview" width="100%" height="100%" controls preload="metadata" loop>
           <source src="movies.mp4" type="video/mp4">
         </video>
       </div>
@@ -271,7 +272,7 @@
   <script>
     const movies = {
       loveuntangled: {
-        poster: "posters/love.jpg",
+        poster: "Posters/love.jpg",
         title: "Love Untangled",
         ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "N/A", duration: "Varies" },
         description: "Set in 1998 Busan, high-school student Park Se-ri struggles with insecurity over her frizzy hair and a secret crush on the popular Kim Hyun. When a new salon opens up and a transfer student Han Yoon-seok enters her life, Se-ri finds herself helping Yoon-seok’s mother (the salon owner) in order to get closer to Hyun and improve her self-image. Ultimately, she learns more about self-acceptance, friendship and what it really takes to confess love.",
@@ -285,7 +286,7 @@
         featuredDesc: ""
       },
       bridesmaid: {
-        poster: "posters/bridesmaids.jpg",
+        poster: "Posters/bridesmaids.jpg",
         title: "Brides Maid",
         ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.8", duration: "2h 5m" },
         description: "Annie is a down-on-her-luck single woman who is asked to serve as maid of honor for her best friend Lillian. While she tries to pull off the role, she faces escalating personal and financial chaos, especially when a new bridesmaid Helen appears to upstage her. As the wedding approaches, Annie must contend with her own insecurities, rivalry, and the strain on her friendships—ultimately coming to terms with who she is and where her life is headed. ",
@@ -299,7 +300,7 @@
         featuredDesc: ""
       },
       onyourweddingday: {
-        poster: "posters/onourwedding.jpg",
+        poster: "Posters/onourwedding.jpg",
         title: "On Your Wedding Day",
         ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:7.0", duration: "1h 50m" },
         description: "Hwang Woo-yeon meets transfer student Hwan Seung-hee in high school and falls for her, though their timing and life paths don’t align. Over the next decade, their relationship weaves through friendship, separation and the question of whether first love remains meaningful. When Woo-yeon receives Seung-hee’s wedding invitation, he reflects on the years gone by, the roads not taken and how life’s changes affect love and memory.",
@@ -313,7 +314,7 @@
         featuredDesc: ""
       },
       bringherback: {
-        poster: "posters/bringing.jpg",
+        poster: "Posters/bringing.jpg",
         title: "Bring Her Back",
         ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:4.6", duration: "1h 34m" },
         description: "After the death of their father, step-siblings Andy and Piper are taken in by their new foster mother. They uncover disturbing occult rituals in their home, confronting grief, trauma and the supernatural consequences of longing to bring a loved one back. It’s a dark, unsettling horror story that explores how far people might go to reverse loss—and what horrors that might invite.",
@@ -327,7 +328,7 @@
         featuredDesc: ""
       },
       iknowwhatyoudidlastsummer: {
-        poster: "posters/iknow.jpg",
+        poster: "Posters/iknow.jpg",
         title: "I Know What You Did Last Summer",
         ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:5.8", duration: "1h 41m" },
         description: "Four teenage friends cover up what they believe is an accidental death after a reckless night. A year later, they’re haunted by a hook-wielding stranger who reminds them they didn’t get away with it. Tension, paranoia and guilt unravel as old secrets resurface and the rules of vengeance come into play.",
@@ -341,7 +342,7 @@
         featuredDesc: ""
       },
       finaldestinationbloodlines: {
-        poster: "posters/final.jpg",
+        poster: "Posters/final.jpg",
         title: "Final Destination: Blood Lines",
         ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.7", duration: "1h 50m" },
         description: "College student Stefani Reyes is plagued by nightmares of her grandparents’ death and returns home to uncover a generational curse tied to the inescapable design of Death. As her family’s fate becomes entwined with past events, she must figure out whether the cycle can be broken—or if they’re all already doomed.",
@@ -355,7 +356,7 @@
         featuredDesc: ""
       },
       waybacklove: {
-        poster: "posters/waybacklove.jpg",
+        poster: "Posters/waybacklove.jpg",
         title: "Way Back Love",
         ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "N/A", duration: "15–30m eps" },
         description: " Jeong Hee-wan, aged 24, has lived withdrawn and directionless since childhood tragedy. Her childhood friend and first love Kim Ram-woo appears, but now as a grim reaper, telling her she has only a short time left. Together, they revisit their past, explore unfinished feelings and navigate the boundary between life and death in a bittersweet supernatural romance.",
@@ -369,7 +370,7 @@
         featuredDesc: ""
       },
       crushology101: {
-        poster: "posters/crush.jpg",
+        poster: "Posters/crush.jpg",
         title: "Crushology 101",
         ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "N/A", duration: "10–30m eps" },
         description: " After a humiliating breakup, Bunny decides only to date handsome guys. But fate introduces four attractive boys into her life, each vying for her attention. Through comedy, embarrassment and romantic confusion, she begins to learn what love really means—beyond looks and first impressions.",
@@ -384,7 +385,7 @@
 
       },
       lovescout: {
-        poster: "posters/lovescout.jpg",
+        poster: "Posters/lovescout.jpg",
         title: "Love Scout",
         ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "N/A", duration: "20-40m eps" },
         description: "Kang Ji-yoon is the ambitious CEO of a head-hunting firm who’s mastered her job but knows little about life outside work. Yoo Eun-ho is her efficient secretary and a single father. As they navigate the competitive workplace, career challenges and personal vulnerabilities, they develop a deep and endearing bond. Their story is about balancing ambition with connection, duty with affection.",
