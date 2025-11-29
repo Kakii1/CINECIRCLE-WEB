@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <title>Aicy’s Movies</title>
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background-color: #0d0d0d;
+      color: white;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      z-index: 10;
+      background: none;
+      border: none;
+      color: #ffeeee;
+      font-weight: 900;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #ff1a1a;
+      transform: scale(1.2);
+    }
+
+    .movie-container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+
+    .sidebar {
+      width: 35%;
+      background-color: #141414;
+      border-right: 2px solid #ff1a1a;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+  
+    .sidebar img,
+    .sidebar h2 {
+      align-self: center;
+    }
+
+    .sidebar img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+      margin-top: 0;
+      margin-bottom: 38px;
+    }
+
+    .sidebar h2 {
+      color: #fffcd8;
+      font-size: 1.8rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      margin: 15px 0 10px;
+    }
+
+    .sidebar p {
+      font-size: .9rem;
+      color: #ddd;
+      line-height: 1.1 !important;
+      margin: 0 !important;
+      text-align: left !important;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: #0d0d0d;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #000;
+      border-radius: 10px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: #222;
+    }
+
+
+    .ratings {
+      display: flex;
+      justify-content: center;
+      gap: 42px;
+      margin-top: 12px;
+      font-size: 1.02rem;
+      margin-bottom: 48px;
+    }
+
+    .ratings span {
+      display: inline-block;
+    }
+
+    .ratings .hd {
+      font-weight: bold;
+    }
+
+    .ratings .imdb {
+      color: #ffcc00;
+    }
+
+    .video-section {
+      flex: 1;
+      background-color: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
+
+    .video-player {
+      width: 90%;
+      aspect-ratio: 16 / 9;
+      background-color: #111;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+    }
+
+    .video-player video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .featured-title {
+      margin-top: 15px;
+      font-size: 2rem;
+      color: #fff0d4;
+    }
+
+    .featured-desc {
+      margin-top: 8px;
+      color: #ddd;
+      line-height: 1.6;
+      max-width: 85%;
+    }
+
+
+    @media (max-width: 768px) {
+      .movie-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #ff1a1a;
+        max-height: 40vh;
+      }
+
+
+
+      .video-section {
+        height: 60vh;
+      }
+
+      .video-player {
+        width: 95%;
+      }
+    }
+
+    .movieDescription {
+      margin-bottom: 20px;
+    }
+
+    .infoSection {
+      align-self: flex-start;
+      text-align: left;
+      padding-left: 15px;
+      font-family: 'roboto';
+    }
+
+    .ratings,
+    .movieDescription,
+    .movieInfo p {
+      font-family: 'Roboto', sans-serif;
+    }
+
+
+    .movieInfo {
+      color: #ccc;
+      line-height: 1.8 !important;
+      margin-top: 20px 0 !important;
+    }
+
+    .movieInfo p {
+      margin-top: 0 !important;
+      margin-bottom: 2px !important;
+      line-height: 1.8 !important;
+    }
+
+    .movieInfo strong {
+      color: #ff1a1a;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="back-btn" onclick="history.back()" title="Go Back">
+    <i class="fa-solid fa-angle-left"></i>
+  </button>
+
+  <div class="movie-container">
+    <div class="sidebar">
+      <img id="moviePoster" src="" alt="Movie Poster">
+      <h2 id="movieTitle">Movie Title</h2>
+      <div id="ratings" class="ratings"></div>
+
+      <div class="movieDescription">
+        <p id="movieDescription">Movie description will appear here.</p>
+      </div>
+      <div class="infosection">
+        <p id="movieInfo">
+          Released date:<br>
+          Genre:<br>
+          Director:<br>
+          Lead actors:
+        </p>
+      </div>
+    </div>
+
+    <div class="video-section">
+      <div class="video-player">
+        <video id="moviePreview" width="100%" height="100%" controls autoplay loop>
+          <source src="movies.mp4" type="video/mp4">
+        </video>
+      </div>
+      <h1 class="featured-title" id="featuredTitle">Featured Movie Title</h1>
+      <p class="featured-desc" id="featuredDesc">Featured movie description will appear here.</p>
+    </div>
+  </div>
+
+  <script>
+    const movies = {
+      meninblack: {
+        poster: "Posters/mib.jpg",
+        title: "Men in Black",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:7.3", duration: "1h 38m" },
+        description: "A sharp-witted New York City cop is recruited by a secret government agency that monitors alien activity on Earth. He and his veteran partner must stop a dangerous extraterrestrial threat that could change life on Earth forever.",
+        released: "July 2, 1997",
+        Genre: "Sci-Fi, Action, Comedy",
+        Year: "1997",
+        Director: "Barry Sonnenfeld",
+        leadactors: "Will Smith, Tommy Lee Jones",
+        preview: "videos/MEN IN BLACK_ INTERNATIONAL - Official Trailer.mp4",
+        featuredDesc: ""
+      },
+      godzillavskingkong: {
+        poster: "Posters/godzilla.jpg",
+        title: "Godzilla vs KingKong",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.3", duration: "1h 53m" },
+        description: "Two legendary titans clash—Godzilla and King Kong—as humanity struggles to contain their battle while uncovering a mysterious power source deep underground that may decide the fate of the world..",
+        released: "2021 (U.S.)",
+        Genre: "Sci-Fi",
+        Director: "Adam Wingard",
+        leadactors: "Alexander Skarsgård, Millie Bobby Brown, Rebecca Hall",
+        preview: "videos/Godzilla vs. Kong – Official Trailer.mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      alitabattleangel: {
+        poster: "Posters/alita.jpg",
+        title: "Alita Battle Angel",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:7.3", duration: "2h 2m" },
+        description: "In a dystopian future, a deactivated cyborg girl is revived in a new body with no memory of her past. She must navigate a dangerous underworld, discover her unique powers, and fight to protect those she cares about while uncovering who she really is.",
+        released: "February 14, 2019",
+        Genre: "Sci-Fi",
+        Year: "2019",
+        Director: "Robert Rodriguez",
+        leadactors: "Rosa Salazar, Christoph Waltz, Jennifer Connelly, Mahershala Ali",
+        preview: "videos/Alita_ Battle Angel _ Official Trailer [HD] _ 20th Century FOX.mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      suzumenotojimari: {
+        poster: "Posters/suzume.jpg",
+        title: "Suzume no Tojimari",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:7.3", duration: "2h 1m" },
+        description: "A young girl meets a mysterious young man whose job is to close doors linking our world to disaster. She embarks on a journey across Japan to seal the strange doors and discovers unexpected truths about fate, loss and connection.",
+        released: "November 11, 2022 (Japan)",
+        Genre: "Mystery",
+        Year: "2022",
+        Director: "Makoto Shinkai",
+        leadactors: "Nanoka Hara, Hokuto Sakurai, Natsumi Sumire",
+        preview: "videos/Suzume.mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      detectiveconan: {
+        poster: "Posters/conan.jpg",
+        title: "Detective Conan",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.9", duration: "2h 1m" },
+        description: " Before the genius detective Conan existed, there was Shinichi Kudo, a sharp-eyed grade school student with a talent far beyond his years. When a classmate is kidnapped, the police struggle to find answers. Shinichi steps in, noticing clues no one else can see, raising against time to save a life. Joined by his childhood friend Ran, this early case becomes the moment thatshapes his destiny. ",
+        released: "April 18, 2025 (Japan)",
+        Genre: "Mystery",
+        Year: "2023",
+        Director: "Yuzuru Tachikawa",
+        leadactors: "Minami Takayama (Conan Edogawa), Wakana Yamazaki (Ran Mōri), Rikiya Koyama (Kogorō Mōri)",
+        preview: "videos/DETECTIVE CONAN THE MOVIE_ ONE-EYED FLASHBACK (OFFICIAL TRAILER) IN CINEMAS 18 S.mp4",
+        featuredTitle: "",
+        featuredDesc: "."
+      },
+      legendoftheguardian: {
+        poster: "Posters/legend.jpg",
+        title: "Legend of the Guardian",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.8", duration: "1h 37m" },
+        description: "Young owl Soren dreams of joining the legendary Guardians who protect owlkind. When he’s kidnapped by an evil army, he escapes and embarks on an epic quest to find the Guardians and fight back against darkness threatening their world. ",
+        released: "September 24, 2010",
+        Genre: "Mystery",
+        Year: "2010",
+        Director: "Zack Snyder",
+        leadactors: "Jim Sturgess, Geoffrey Rush, Helen Mirren, Hugo Weaving",
+        preview: "videos/Legend of the Guardians_ The Owls of Ga_Hoole.mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      jewelinthepalace: {
+        poster: "Posters/jewel.jpg",
+        title: "Jewel in the Palace",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.5", duration: "54 eps (-60m)" },
+        description: "Based on a true story, this acclaimed series follows Jang-geum, the first female royal physician of the Joseon Dynasty, who rises from servant to palace chef to royal doctor through intelligence, perseverance, and compassion. ",
+        released: "September 15, 2003 – March 23, 2004 (South Korea)",
+        Genre: "Romance",
+        Year: "2017",
+        Director: "lee Byung-soo",
+        leadactors: "Lee Young-ae, Ji Jin-hee, Hong Ri-na, Im Ho",
+        preview: "videos/[TRAILER] _Jewel In the Palace.mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      thebrideofhabaek: {
+        poster: "Posters/thebride.jpg",
+        title: "The Bridge of Habaek",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.9", duration: "16 eps (60m)" },
+        description: "When the water god Ha-baek visits Earth to claim his divine throne, he seeks help from a skeptical human doctor. As they work together, their destinies intertwine, uncovering a love that transcends the divide between gods and mortals. ",
+        released: "July 3 – August 22, 2017 (South Korea)",
+        Genre: "Romance",
+        Year: "2017",
+        Director: "Kim Byung-soo",
+        leadactors: "Nam Joo-hyuk, Shin Se-kyung, Krystal Jung, Im Ju-hwan",
+        preview: "videos/The Bride of Habaek (Trailer).mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      w: {
+        poster: "Posters/w.jpg",
+        title: "W",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.0", duration: "16 eps (60m)" },
+        description: "A surgeon is pulled into the pages of a webtoon created by her father and meets the story’s hero, Kang Chul. Their worlds collide as fiction and reality blur, leading to a thrilling love story that defies logic and existence itself. ",
+        released: "July 20 – September 14, 2016 (South Korea)",
+        Genre: "Romance",
+        Director: "Jung Dae-yoon",
+        leadactors: "Lee Jong-suk, Han Hyo-joo",
+        preview: "videos/W - Two World Apart _ Official Trailer _ Releasing on 14th March 2025 _ Han Hyo-.mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      }
+
+
+    };
+
+ 
+    const params = new URLSearchParams(window.location.search);
+    const movieID = params.get('movie');
+
+    const movie = movies[movieID] || movies['avengersendgame']; 
+
+
+    document.getElementById("moviePoster").src = movie.poster;
+    document.getElementById("movieTitle").textContent = movie.title;
+    document.getElementById("ratings").textContent = movie.ratings;
+    document.getElementById("movieDescription").textContent = movie.description;
+    document.getElementById("movieInfo").textContent = movie.released + "\n" + movie.Genre + "\n" + movie.Year + "\n" + movie.Director + "\n" + movie.leadactors;
+    document.getElementById("moviePreview").src = movie.preview;
+    document.getElementById("featuredTitle").textContent = movie.featuredTitle;
+    document.getElementById("featuredDesc").textContent = movie.featuredDesc;
+
+    if (movie.ratings) {
+      document.getElementById("ratings").innerHTML = `
+        <span class="hd">${movie.ratings.hd}</span>
+        <span>${movie.ratings.trailer}</span>
+        <span class="imdb">${movie.ratings.imdb}</span>
+        <span>${movie.ratings.duration}</span>
+      `;
+    } else {
+      document.getElementById("ratings").textContent = "";
+    }
+
+
+    document.getElementById("movieInfo").innerHTML = `
+      <p><strong>Released date:</strong> ${movie.released}</p>
+      <p><strong>Genre:</strong> ${movie.Genre}</p>
+      <p><strong>Director:</strong> ${movie.Director}</p>
+      <p><strong>Lead actors:</strong> ${movie.leadactors}</p>
+    `;
+  </script>
+</body>
+
+</html>

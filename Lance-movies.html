@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Lance’s Movies</title>
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background-color: #0d0d0d;
+      color: white;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      z-index: 10;
+      background: none;
+      border: none;
+      color: #ffeeee;
+      font-weight: 900;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #ff1a1a;
+      transform: scale(1.2);
+    }
+
+    .movie-container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+
+    .sidebar {
+      width: 35%;
+      background-color: #141414;
+      border-right: 2px solid #ff1a1a;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+
+    .sidebar img,
+    .sidebar h2 {
+      align-self: center;
+    }
+
+    .sidebar img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+      margin-top: 0;
+      margin-bottom: 38px;
+    }
+
+    .sidebar h2 {
+      color: #fffcd8;
+      font-size: 1.8rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      margin: 15px 0 10px;
+    }
+
+    .sidebar p {
+      font-size: .9rem;
+      color: #ddd;
+      line-height: 1.1 !important;
+      margin: 0 !important;
+      text-align: left !important;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: #0d0d0d;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #000;
+      border-radius: 10px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: #222;
+    }
+
+
+    .ratings {
+      display: flex;
+      justify-content: center;
+      gap: 42px;
+      margin-top: 12px;
+      font-size: 1.02rem;
+      margin-bottom: 48px;
+    }
+
+    .ratings,
+    .movieDescription,
+    .movieInfo p {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .ratings span {
+      display: inline-block;
+    }
+
+    .ratings .hd {
+      font-weight: bold;
+    }
+
+    .ratings .imdb {
+      color: #ffcc00;
+    }
+
+    .video-section {
+      flex: 1;
+      background-color: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
+
+    .video-player {
+      width: 90%;
+      aspect-ratio: 16 / 9;
+      background-color: #111;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+    }
+
+    .video-player video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .featured-title {
+      margin-top: 15px;
+      font-size: 2rem;
+      color: #ff1a1a;
+    }
+
+    .featured-desc {
+      margin-top: 8px;
+      color: #ddd;
+      line-height: 1.6;
+      max-width: 85%;
+    }
+
+
+    @media (max-width: 768px) {
+      .movie-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        max-height: 40vh;
+      }
+
+
+
+      .video-section {
+        height: 60vh;
+      }
+
+      .video-player {
+        width: 95%;
+      }
+    }
+
+    .movieDescription {
+      margin-bottom: 20px;
+    }
+
+    .infoSection {
+      align-self: flex-start;
+      text-align: left;
+      padding-left: 15px;
+      font-family: 'roboto';
+    }
+
+    .ratings,
+    .movieDescription,
+    .movieInfo p {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .movieInfo {
+      color: #ccc;
+      line-height: 1.8 !important;
+      margin-top: 20px 0 !important;
+    }
+
+    .movieInfo p {
+      margin-top: 0 !important;
+      margin-bottom: 2px !important;
+      line-height: 1.8 !important;
+    }
+
+    .movieInfo strong {
+      color: #ff1a1a;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="back-btn" onclick="history.back()" title="Go Back">
+    <i class="fa-solid fa-angle-left"></i>
+  </button>
+
+  <div class="movie-container">
+    <div class="sidebar">
+      <img id="moviePoster" src="" alt="Movie Poster">
+      <h2 id="movieTitle">Movie Title</h2>
+      <div id="ratings" class="ratings"></div>
+
+      <div class="movieDescription">
+        <p id="movieDescription">Movie description will appear here.</p>
+      </div>
+      <div class="infosection">
+        <p id="movieInfo">
+          Released date:<br>
+          Genre:<br>
+          Director:<br>
+          Lead actors:
+        </p>
+      </div>
+    </div>
+
+    <div class="video-section">
+      <div class="video-player">
+        <video id="moviePreview" width="100%" height="100%" controls autoplay loop>
+          <source src="movies.mp4" type="video/mp4">
+        </video>
+      </div>
+      <h1 class="featured-title" id="featuredTitle">Featured Movie Title</h1>
+      <p class="featured-desc" id="featuredDesc">Featured movie description will appear here.</p>
+    </div>
+  </div>
+
+
+  <script>
+const movies = {
+  avengerendgame: {
+    poster: "Posters/endgame.jpg",
+    title: "Avengers: Endgame",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.4", duration: "3h 1m" },
+    description: "Years after the death of the infamous killer John Kramer, a new series of murders occur with his signature style—victims forced to play deadly “games” to test their morality and will to live. Detectives race to uncover the truth, wondering if Kramer has somehow returned or if a new apprentice has taken his place. The film combines mystery, tension, and gruesome traps that challenge the line between justice and cruelty.",
+    released: "April 26, 2019",
+    Genre: "Action",
+    Year: 2019,
+    Director: "Anthony & Joe Russo",
+    leadactors: "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson",
+    preview: "videos/Marvel Studios_ Avengers_ Endgame - Official Trailer.mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  karatekid: {
+    poster: "Posters/karate.jpg",
+    title: "Karate Kid",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.2", duration: "2h 20m" },
+    description: "A young boy learns self-defense and discipline through martial arts under the guidance of a wise mentor. Whether it’s Daniel and Mr. Miyagi in the 1984 original or Dre and Mr. Han in the 2010 remake, the story centers on courage, respect, and personal growth—showing that true strength comes from patience and perseverance, not aggression.",
+    released: "1984 (US)",
+    Genre: "Action",
+    Year: 2010,
+    Director: "Harald Zwart",
+    leadactors: "Ralph Macchio, Noriyuki ‘Pat’ Morita, Elisabeth Shue",
+    preview: "videos/Watch the Official THE KARATE KID Trailer in HD - Sony Pictures Entertainment (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  johnwick: {
+    poster: "Posters/john.jpg",
+    title: "John Wick",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:7.4", duration: "1h 41m" },
+    description: "After losing his wife and having his beloved dog killed by gangsters, retired hitman John Wick comes out of retirement to seek revenge. His unmatched skills and determination make him unstoppable as he battles through the criminal underworld. The movie is known for its intense action, sleek style, and emotional drive rooted in loss and vengeance.",
+    released: "2014 (US)",
+    Genre: "Action",
+    Year: 2014,
+    Director: "Chad Stahelski",
+    leadactors: "Keanu Reeves",
+    preview: "videos/John Wick (2014)  Official Trailer.mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  interstellar: {
+    poster: "Posters/inter.jpg",
+    title: "Interstellar",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.7", duration: "2h 49m" },
+    description: "In a future where Earth is dying, pilot Cooper joins a team of astronauts traveling through a wormhole to find a new planet for humanity. Along the journey, they face black holes, time distortion, and heart-wrenching sacrifices. The film beautifully explores the power of love, time, and the human spirit’s drive to survive and connect across galaxies.",
+    released: "November 7, 2014",
+    Genre: "Sci-Fi",
+    Year: 2014,
+    Director: "Christopher Nolan",
+    leadactors: "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine",
+    preview: "videos/Interstellar Movie - Official Trailer.mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  pacificrim: {
+    poster: "Posters/pacific.jpg",
+    title: "Pacific Rim",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.9", duration: "2h 11m" },
+    description: "When monstrous sea creatures known as Kaiju rise from a dimensional rift, humanity builds giant robots called Jaegers to fight them. Two unlikely pilots, Raleigh and Mako, must work together to operate one of the last Jaegers and save the world from destruction. It’s a thrilling sci-fi action film filled with epic battles, teamwork, and human resilience against overwhelming odds.",
+    released: "July 12, 2013",
+    Genre: "Sci-Fi, Action",
+    Year: 2013,
+    Director: "Guillermo del Toro",
+    leadactors: "Charlie Hunnam, Idris Elba, Rinko Kikuchi",
+    preview: "videos/Pacific Rim - Official Main Trailer [HD] - Warner Bros. (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  theterminator: {
+    poster: "Posters/terminator.jpg",
+    title: "The Terminator",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.1", duration: "1h 47m" },
+    description: "A cyborg assassin known as the Terminator is sent from the future to kill Sarah Connor, the mother of humanity’s future leader. A soldier named Kyle Reese follows to protect her, leading to a relentless chase between man and machine. The movie combines science fiction and action with themes of fate, technology, and the survival of humankind.",
+    released: "1984 (US)",
+    Genre: "Sci-Fi, Action",
+    Year: 1984,
+    Director: "James Cameron",
+    leadactors: "Arnold Schwarzenegger, Michael Biehn, Linda Hamilton",
+    preview: "videos/Terminator Dark Fate - Official Trailer (2019.mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  it: {
+    poster: "Posters/it.jpg",
+    title: "IT",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:7.3", duration: "2h 15m" },
+    description: "In the small town of Derry, a group of kids known as “The Losers Club” face their deepest fears when a terrifying clown named Pennywise emerges from the sewers. Feeding on fear, Pennywise terrorizes the children until they unite to confront the evil haunting their town. The story blends horror and friendship, showing how courage and unity can overcome even the darkest nightmares.",
+    released: "2017 (US)",
+    Genre: "Horror",
+    Year: 2017,
+    Director: "Andy Muschietti",
+    leadactors: "Ensemble cast of seven children (not individually all listed)",
+    preview: "videos/IT.mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  jigsaw: {
+    poster: "Posters/jigsaw.jpg",
+    title: "Jigsaw",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:5.8", duration: "1h 32m" },
+    description: "Years after the death of the infamous killer John Kramer, a new series of murders occur with his signature style—victims forced to play deadly “games” to test their morality and will to live. Detectives race to uncover the truth, wondering if Kramer has somehow returned or if a new apprentice has taken his place. The film combines mystery, tension, and gruesome traps that challenge the line between justice and cruelty.",
+    released: "October 27, 2017",
+    Genre: "Horror",
+    Year: 2017,
+    Director: "Spierig Brothers",
+    leadactors: "Matt Passmore, Callum Keith Rennie, Hannah Emily Anderson, Tobin Bell",
+    preview: "videos/Jigsaw (2017 Movie) Official Trailer - Lionsgate Movies (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  orphan: {
+    poster: "Posters/orphan.jpg",
+    title: "Orphan",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:7.0", duration: "2h 3m" },
+    description: "After losing their unborn child, Kate and John adopt a 9-year-old girl named Esther from an orphanage. What begins as a happy new start turns horrifying as strange and violent incidents reveal Esther’s sinister nature. The shocking truth about who she really is leads to a chilling fight for survival, making this psychological thriller both disturbing and unforgettable.",
+    released: "July 24, 2009",
+    Genre: "Horror",
+    Year: 2009,
+    Director: "Jaume Collet-Serra",
+    leadactors: "Vera Farmiga, Peter Sarsgaard, Isabelle Fuhrman",
+    preview: "videos/🎥 ORPHAN (2009)  Movie Trailer  Full HD  1080p - MOVIE PREDICTOR (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  }
+};
+
+
+
+    const params = new URLSearchParams(window.location.search);
+    const movieID = params.get('movie');
+
+    const movie = movies[movieID] || movies['avengersendgame'];
+
+
+    document.getElementById("moviePoster").src = movie.poster;
+    document.getElementById("movieTitle").textContent = movie.title;
+    document.getElementById("ratings").textContent = movie.ratings;
+    document.getElementById("movieDescription").textContent = movie.description;
+    document.getElementById("moviePreview").src = movie.preview;
+    document.getElementById("featuredTitle").textContent = movie.featuredTitle;
+    document.getElementById("featuredDesc").textContent = movie.featuredDesc;
+
+    if (movie.ratings) {
+      document.getElementById("ratings").innerHTML = `
+        <span class="hd">${movie.ratings.hd}</span>
+        <span>${movie.ratings.trailer}</span>
+        <span class="imdb">${movie.ratings.imdb}</span>
+        <span>${movie.ratings.duration}</span>
+      `;
+    } else {
+      document.getElementById("ratings").textContent = "";
+    }
+
+
+    document.getElementById("movieInfo").innerHTML = `
+      <p><strong>Released date:</strong> ${movie.released}</p>
+      <p><strong>Genre:</strong> ${movie.Genre}</p>
+      <p><strong>Director:</strong> ${movie.Director}</p>
+      <p><strong>Lead actors:</strong> ${movie.leadactors}</p>
+    `;
+  </script>
+</body>
+
+</html>

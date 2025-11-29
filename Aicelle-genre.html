@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <title>Aicelle's Movie List</title>
+  <style>
+        body {
+      background-image: url('https://scontent.fmnl3-4.fna.fbcdn.net/v/t1.15752-9/565054464_1269550454938032_1305786017275666320_n.png?stp=dst-png_s480x480&_nc_cat=101&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeEUHVLzvV5bfDA1THMEoMB8wAUbXlDpBL7ABRteUOkEvox9Dte3N7bU4nfi-10KpYBQMQww-rLLSx-nBSRyX-0t&_nc_ohc=DD2I6_ddp8sQ7kNvwF31zKx&_nc_oc=Admz6V1eC53-D3gCA1jMFHqrG4x8TbDYf6G6gxdbrZNMga2KmiPzPX-ByIbFMl6-qkA&_nc_zt=23&_nc_ht=scontent.fmnl3-4.fna&oh=03_Q7cD3gHijXlJ2QLyxIO3JnKR6-EUzQLafsBRpr-hWc4K3O6mqw&oe=691C1714');
+      background-size: cover;
+      background-position: center;
+      color: rgb(223, 223, 223);
+    }
+
+    .menu {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+      padding: 15px 25px;
+      z-index: 10;
+    }
+
+
+    .menu a,
+    .menu button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    .menu a {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      text-decoration: none;
+      text-decoration-color: white;
+      text-underline-offset: 4px;
+      padding: 0;
+      transition: color 0.3s ease, text-decoration-color 0.3s ease;
+    }
+
+    .menu a:hover {
+      color: #ff1a1a;
+      text-decoration-color: #ff1a1a;
+      transform: scale(1.2);
+    }
+
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: #ffeeee;
+      font-weight: 900;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0px 7px;
+      transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #ff1a1a;
+      transform: scale(1.2);
+    }
+
+
+    body {
+      margin: 0;
+      background-color: #141414;
+      color: #fff;
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .main-content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 3.5rem;
+      letter-spacing: .2rem;
+      margin-bottom: 30px;
+      font-family: 'Bebas Neue', sans-serif;
+    }
+
+    .genre-summary {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .genre-summary button {
+      background-color: #333;
+      border: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .genre-summary button:hover {
+      background-color: #ffcc00;
+      color: #141414;
+    }
+
+    .movie-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      justify-items: center;
+    }
+
+    .movie-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: underline;
+      text-decoration-color: #df0a0a;
+      text-underline-offset: 12px;
+      text-decoration-thickness: 19px;
+      color: inherit;
+      background: none;
+      border: none;
+      padding: 0;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.05);
+      text-decoration-color: #df0a0a;
+    }
+
+    .movie-card .number {
+      font-size: 16rem;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 4px rgba(255, 243, 228, 0.795);
+      line-height: 1;
+      z-index: 0;
+      margin-right: -30px;
+    }
+
+    .movie-card img {
+      height: 300px;
+      width: auto;
+      border-radius: 10px;
+      position: relative;
+      z-index: 1;
+      display: block;
+      box-shadow: -19px 25px 35px rgba(0, 0, 0, 0.7);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu">
+    <button class="back-btn" onclick="history.back()" title="Go Back">
+      <i class="fa-solid fa-angle-left"></i>
+    </button>
+
+    <a href="Homepage.html" title="Home">
+      <i class="fa-solid fa-house"></i>
+    </a>
+  </div>
+
+  <main class="main-content">
+    <h2>🎞️ Aicelle's Movie Picks</h2>
+
+    <div class="genre-summary">
+      <button onclick="filterMovies('Sci-Fi')">🧪 Sci-Fi </button>
+      <button onclick="filterMovies('Mystery')">🕵️ Mystery</button>
+      <button onclick="filterMovies('Romance')">💖 Romance</button>
+    </div>
+
+
+    <div id="movie-list" class="movie-list"></div>
+  </main>
+
+  <script>
+
+
+
+    const movies = [
+      { title: "Men in Black", genre: ["Sci-Fi"], year: 1997, director: "Barry Sonnenfeld", rating: "PG-13", img: "Posters/mib.jpg" },
+      { title: "Godzilla vs KingKong", genre: ["Sci-Fi"], year: 2021, director: "Adam Wingard", rating: "PG-13", img: "Posters/godzilla.jpg" },
+      { title: "Alita Battle Angel", genre: ["Sci-Fi"], year: 2019, director: "Robert Rodriguez", rating: "PG-13", img: "Posters/alita.jpg" },
+      { title: "Suzume no Tojimari", genre: ["Mystery"], year: 2022, director: "Makoto Shinkai", rating: "PG", img: "Posters/suzume.jpg" },
+      { title: "Detective Conan", genre: ["Mystery"], year: 2023, director: "Yuzuru Tachikawa", rating: "PG", img: "Posters/conan.jpg" },
+      { title: "Legend of the Guardian", genre: ["Mystery"], year: 2010, director: "Zack Snyder", rating: "PG", img: "Posters/legend.jpg" },
+      { title: "Jewel in the Palace", genre: ["Romance"], year: 2003, director: "Lee Byung-hoon", rating: "TV-14", img: "Posters/jewel.jpg" },
+      { title: "The Bride of Habaek", genre: ["Romance"], year: 2017, director: "Kim Byung-soo", rating: "TV-14", img: "Posters/thebride.jpg" },
+      { title: "W", genre: ["Romance"], year: 2016, director: "Jung Dae-yoon", rating: "TV-14", img: "Posters/w.jpg" }
+    ];
+
+    function filterMovies(selectedGenre) {
+      const container = document.getElementById("movie-list");
+      container.innerHTML = "";
+
+      const filtered = movies.filter(movie => movie.genre.includes(selectedGenre)).slice(0, 3);
+
+      filtered.forEach((movie, index) => {
+        const link = document.createElement("a");
+        link.href = `Aicelle-movies.html?movie=${movie.title.toLowerCase().replace(/\s+/g, "")}`;
+        link.className = "movie-card";
+        link.innerHTML = `
+        <div class="number">${index + 1}</div>
+        <img src="${movie.img}" alt="${movie.title} Poster" />
+        </div>
+        `;
+        container.appendChild(link);
+      });
+
+    }
+
+    window.onload = function () {
+      filterMovies("Sci-Fi"); 
+    };
+  </script>
+</body>
+
+</html>

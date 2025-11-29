@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Jeiel’s Movies</title>
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background-color: #0d0d0d;
+      color: white;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      z-index: 10;
+      background: none;
+      border: none;
+      color: #ffeeee;
+      font-weight: 900;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #ff1a1a;
+      transform: scale(1.2);
+    }
+
+    .movie-container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+
+    .sidebar {
+      width: 35%;
+      background-color: #141414;
+      border-right: 2px solid #ff1a1a;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+
+    .sidebar img,
+    .sidebar h2 {
+      align-self: center;
+    }
+
+    .sidebar img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+      margin-top: 0;
+      margin-bottom: 38px;
+    }
+
+    .sidebar h2 {
+      color: #fffcd8;
+      font-size: 1.8rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      margin: 15px 0 10px;
+    }
+
+    .sidebar p {
+      font-size: .9rem;
+      color: #ddd;
+      line-height: 1.1 !important;
+      margin: 0 !important;
+      text-align: left !important;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: #0d0d0d;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #000;
+      border-radius: 10px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: #222;
+    }
+
+
+    .ratings {
+      display: flex;
+      justify-content: center;
+      gap: 42px;
+      margin-top: 12px;
+      font-size: 1.02rem;
+      margin-bottom: 48px;
+    }
+
+    .ratings,
+    .movieDescription,
+    .movieInfo p {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .ratings span {
+      display: inline-block;
+    }
+
+    .ratings .hd {
+      font-weight: bold;
+    }
+
+    .ratings .imdb {
+      color: #ffcc00;
+    }
+
+    .video-section {
+      flex: 1;
+      background-color: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
+
+    .video-player {
+      width: 90%;
+      aspect-ratio: 16 / 9;
+      background-color: #111;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+    }
+
+    .video-player video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .featured-title {
+      margin-top: 15px;
+      font-size: 2rem;
+      color: #ff1a1a;
+    }
+
+    .featured-desc {
+      margin-top: 8px;
+      color: #ddd;
+      line-height: 1.6;
+      max-width: 85%;
+    }
+
+
+    @media (max-width: 768px) {
+      .movie-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #ff1a1a;
+        max-height: 40vh;
+      }
+
+
+
+      .video-section {
+        height: 60vh;
+      }
+
+      .video-player {
+        width: 95%;
+      }
+    }
+
+    .movieDescription {
+      margin-bottom: 20px;
+    }
+
+    .infoSection {
+      align-self: flex-start;
+      text-align: left;
+      padding-left: 15px;
+      font-family: 'roboto';
+    }
+
+    .ratings,
+    .movieDescription,
+    .movieInfo p {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .movieInfo {
+      color: #ccc;
+      line-height: 1.8 !important;
+      margin-top: 20px 0 !important;
+    }
+
+    .movieInfo p {
+      margin-top: 0 !important;
+      margin-bottom: 2px !important;
+      line-height: 1.8 !important;
+    }
+
+    .movieInfo strong {
+      color: #ff1a1a;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="back-btn" onclick="history.back()" title="Go Back">
+    <i class="fa-solid fa-angle-left"></i>
+  </button>
+
+  <div class="movie-container">
+    <div class="sidebar">
+      <img id="moviePoster" src="" alt="Movie Poster">
+      <h2 id="movieTitle">Movie Title</h2>
+      <div id="ratings" class="ratings"></div>
+
+      <div class="movieDescription">
+        <p id="movieDescription">Movie description will appear here.</p>
+      </div>
+      <div class="infosection">
+        <p id="movieInfo">
+          Released date:<br>
+          Genre:<br>
+          Director:<br>
+          Lead actors:
+        </p>
+      </div>
+    </div>
+
+    <div class="video-section">
+      <div class="video-player">
+        <video id="moviePreview" width="100%" height="100%" controls autoplay loop>
+          <source src="movies.mp4" type="video/mp4">
+        </video>
+      </div>
+      <h1 class="featured-title" id="featuredTitle">Featured Movie Title</h1>
+      <p class="featured-desc" id="featuredDesc">Featured movie description will appear here.</p>
+    </div>
+  </div>
+
+  <script>
+const movies = {
+  avengersendgame: {
+    poster: "Posters/endgame.jpg",
+    title: "Avengers: Endgame",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.4", duration: "3h 1m" },
+    description: "After Thanos wipes out half of all life in the universe, the surviving Avengers reunite to undo his actions and restore balance. Using time travel, they collect the Infinity Stones from different timelines in one final, desperate mission. The film reaches an emotional climax with Iron Man’s sacrifice, Captain America’s farewell, and the team’s ultimate victory, marking the end of an era for Earth’s mightiest heroes.",
+    released: "April 26, 2019",
+    Genre: "Action",
+    Year: 2019,
+    Director: "Anthony & Joe Russo",
+    leadactors: "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson",
+    preview: "videos/Marvel Studios_ Avengers_ Endgame - Official Trailer.mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  reacher: {
+    poster: "Posters/reacher.jpg",
+    title: "Reacher",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.1", duration: "45–60m eps" },
+    description: "Based on Lee Child’s novels, the series follows Jack Reacher, a former U.S. Army military police officer who drifts from town to town, often finding himself in the middle of criminal conspiracies. Despite his quiet nature, Reacher uses his sharp intelligence and combat skills to deliver justice to those who deserve it. Each season focuses on a new case that reveals more about his past and moral code.",
+    released: "February 4, 2022 ",
+    Genre: "Action",
+    Year: 2022,
+    Director: "Nick Santora",
+    leadactors: "Alan Ritchson, Maria Sten, Willa Fitzgerald",
+    preview: "videos/Reacher - Official Trailer _ Prime Video.mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  infinitywar: {
+    poster: "Posters/infinity.jpg",
+    title: "Avengers: Infinity War",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.4", duration: "2h 29m" },
+    description: "The Avengers and their allies must stop the powerful warlord Thanos from collecting all six Infinity Stones, which would allow him to destroy half of the universe with a snap of his fingers. Despite their efforts, Thanos succeeds, leaving devastation and loss across the cosmos. The film ends on a dark note, setting the stage for the Avengers’ redemption in Endgame.",
+    released: "April 27, 2018 ",
+    Genre: "Action",
+    Year: 2022,
+    Director: "Nick Santora",
+    leadactors: "Robert Downey Jr., Chris Hemsworth, Chris Evans, Benedict Cumberbatch, Josh Brolin",
+    preview: "videos/Marvel Studios_ Avengers Infinity War Official Trailer - Marvel Entertainment (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  dexter: {
+    poster: "Posters/dexter.jpg",
+    title: "Dexter",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.7", duration: "50–60m eps" },
+    description: "Dexter Morgan, a forensic blood analyst for the Miami Police Department, hides a dark secret—he’s a vigilante serial killer who targets other murderers. Torn between his desire to fit in and his compulsion to kill, Dexter’s life becomes a constant balancing act between justice and morality. The series explores his psychological struggles, relationships, and how long he can keep his double life hidden.",
+    released: "October 1, 2006",
+    Genre: "Drama",
+    Year: 2006,
+    Director: "James Manos Jr.",
+    leadactors: "Michael C. Hall, Jennifer Carpenter, David Zayas",
+    preview: "videos/Dexter Resurrection  Official Trailer  Paramount+ with SHOWTIME - Dexter Official (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  peakyblinders: {
+    poster: "Posters/peaky.jpg",
+    title: "Peaky Blinders",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB: .8", duration: "55–65m eps" },
+    description: "Set in post–World War I Birmingham, England, the series follows the Shelby family, led by the cunning and ambitious Tommy Shelby. The Peaky Blinders gang rises to power through illegal betting, smuggling, and political manipulation. As Tommy expands his empire, he battles rivals, betrayal, and his own inner demons, blending crime, drama, and historical depth with style and grit.",
+    released: "September 12, 2013",
+    Genre: "Drama",
+    Year: 2013,
+    Director: "Steven Knight",
+    leadactors: "Cillian Murphy, Helen McCrory, Paul Anderson",
+    preview: "videos/Peaky Blinders  Season 5 Trailer  Netflix - Netflix (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  interstellar: {
+    poster: "Posters/inter.jpg",
+    title: "Interstellar",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:8.7", duration: "2h 49m" },
+    description: "In a dying future Earth, former pilot Cooper joins a team of astronauts on a mission through a wormhole to find a new home for humanity. As they explore distant planets, the crew faces time dilation, sacrifice, and emotional separation from loved ones. The film explores themes of love, survival, and the power of human connection—even across space and time.",
+    released: "November 7, 2014",
+    Genre: "Drama",
+    Year: 2014,
+    Director: "Christopher Nolan",
+    leadactors: "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caines",
+    preview: "videos/Interstellar Movie - Official Trailer.mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  incantation: {
+    poster: "Posters/incantation.jpg",
+    title: "Incantation",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.3", duration: "1h 51m" },
+    description: "This Taiwanese horror film follows Li Ronan, a mother who tries to protect her daughter from a deadly curse after violating a religious taboo years earlier. Through a mix of found footage and storytelling, the film reveals the terrifying consequences of faith, fear, and superstition. It’s a chilling look at how belief can both save and doom those who hold it.",
+    released: "J2022 (Taiwan)",
+    Genre: "Horror",
+    Year: 2022,
+    Director: "Kevin Ko",
+    leadactors: "(Primary) Tsai Hsuan‑yen, Huang Sin‑ting, Kao Ying‑hsuan",
+    preview: "videos/Incantation  Official Trailer  Netflix - Netflix Malaysia (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  quietplace: {
+    poster: "Posters/quiet.jpg",
+    title: "A Quiet Place",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:7.5", duration: "1h 30m" },
+    description: "In a post-apocalyptic world invaded by sound-sensitive monsters, a family must live in complete silence to survive. Parents Lee and Evelyn Abbott teach their children how to communicate through sign language and adapt to a life where the slightest noise means death. The film’s tension and emotional depth highlight themes of love, sacrifice, and parental protection.",
+    released: "2018 (US)",
+    Genre: "Horror",
+    Year: 2018,
+    Director: "John Krasinski",
+    leadactors: "Emily Blunt, John Krasinski, Millicent Simmonds, Noah Jupe",
+    preview: "videos/A Quiet Place (2018) - Official Trailer - Paramount Pictures - Paramount Pictures (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  },
+  longlegs: {
+    poster: "Posters/longlegs.jpg",
+    title: "Longlegs",
+    ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.4", duration: "1h 41m" },
+    description: "FBI agent Lee Harker is assigned to investigate a series of disturbing murders linked to an elusive serial killer known as “Longlegs.” As she dives deeper, she discovers a connection between the killer and her own past, unraveling a web of psychological horror and occult mysteries. The film builds dread through atmosphere and performance, becoming one of the most haunting thrillers of recent years.",
+    released: "2024 (US)",
+    Genre: "Horror",
+    Year: 2022,
+    Director: "Osgood Perkins",
+    leadactors: "Maika Monroe, Nicolas Cage, Blair Underwood",
+    preview: "videos/LONGLEGS  Official Trailer  In Theaters July 12 - NEON (1080p, h264).mp4",
+    featuredTitle: "",
+    featuredDesc: ""
+  }
+};
+
+
+
+    const params = new URLSearchParams(window.location.search);
+    const movieID = params.get('movie');
+
+    const movie = movies[movieID] || movies['avengersendgame']; 
+
+
+    document.getElementById("moviePoster").src = movie.poster;
+    document.getElementById("movieTitle").textContent = movie.title;
+    document.getElementById("ratings").textContent = movie.ratings;
+    document.getElementById("movieDescription").textContent = movie.description;
+    document.getElementById("moviePreview").src = movie.preview;
+    document.getElementById("featuredTitle").textContent = movie.featuredTitle;
+    document.getElementById("featuredDesc").textContent = movie.featuredDesc;
+
+    if (movie.ratings) {
+      document.getElementById("ratings").innerHTML = `
+        <span class="hd">${movie.ratings.hd}</span>
+        <span>${movie.ratings.trailer}</span>
+        <span class="imdb">${movie.ratings.imdb}</span>
+        <span>${movie.ratings.duration}</span>
+      `;
+    } else {
+      document.getElementById("ratings").textContent = "";
+    }
+
+
+    document.getElementById("movieInfo").innerHTML = `
+      <p><strong>Released date:</strong> ${movie.released}</p>
+      <p><strong>Genre:</strong> ${movie.Genre}</p>
+      <p><strong>Director:</strong> ${movie.Director}</p>
+      <p><strong>Lead actors:</strong> ${movie.leadactors}</p>
+    `;
+  </script>
+</body>
+
+</html>

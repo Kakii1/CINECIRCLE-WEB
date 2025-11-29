@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie List</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&display=swap" rel="stylesheet">
+
+
+<style>
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-size: cover;
+    color: white;
+  }
+
+
+
+  .video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -2;
+  }
+
+  #bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    filter: brightness(0.4) blur(2px);
+    will-change: auto;
+  }
+
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+  }
+
+  .poster-overlay {
+    margin-top: .5rem;
+  }
+
+  h2 {
+    font-family: "Henny Penny", cursive;
+    font-size: 75px;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+  }
+
+  .member-card p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+  }
+  
+
+  .main-content {
+    position: relative;
+    z-index: 5;
+    color: #F2EFEA;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+  <div class="video-bg">
+    <video autoplay muted loop playsinline id="bg-video">
+      <source src="Profiles-BG.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="video-overlay"></div>
+
+  <main class="main-content">
+    <section id="poster-transition"></section>
+
+    <div class="poster-overlay">
+      <h2>Profiles</h2>
+    </div>
+
+    <section id="members" aria-labelledby="members-heading">
+      <div class="member-list">
+        <a href="Aicelle-genre.html" class="member-card">
+          <img
+            src="pictures/aicy.jpg"
+            alt="Aicelle" />
+          <p>Aicy</p>
+        </a>
+
+        <a href="Jeiel-genre.html" class="member-card">
+          <img
+            src="pictures/jeiel.jpg"
+            alt="Jeiel" />
+          <p>Jeiel</p>
+        </a>
+
+        <a href="Lance-genre.html" class="member-card">
+          <img
+            src="pictures/lance.jpg"
+            alt="Lance" />
+          <p>EGGYSUN</p>
+        </a>
+
+        <a href="Alyza-genre.html" class="member-card">
+          <img
+            src="pictures/alyza.gif"
+            alt="Alyza" />
+          <p>AKI</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+</body>
+
+</html>
+
+
+<script>
+
+  const startBtn = document.get
+
+</script>

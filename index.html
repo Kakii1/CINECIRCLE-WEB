@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie List</title>
+
+
+  <link rel="stylesheet" href="style.css" />
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Henny+Penny&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: rgb(223, 223, 223);
+      position: relative;
+    }
+
+    .bg-img {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    h1 {
+      font-family: "Henny Penny", cursive;
+      font-size: 105px;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+    }
+
+    button {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.5rem;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 10px;
+      background-color: rgba(92, 0, 0);
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: rgb(134, 8, 8);
+    }
+  </style>
+</head>
+
+<body>
+  <img src="Pictures/565054464_1269550454938032_1305786017275666320_n.png" alt="background" class="bg-img">
+
+
+  <main class="main-content">
+    <section id="home" class="hero active" role="banner" aria-label="Landing Section">
+      <div class="hero-content">
+        <h1>CINECIRCLE</h1>
+        <a href="afterStart.html">
+          <button id="startBtn" aria-label="Start browsing movies">START</button>
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

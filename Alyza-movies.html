@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Alyza’s Movies</title>
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background-color: #0d0d0d;
+      color: white;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      z-index: 10;
+      background: none;
+      border: none;
+      color: #ffeeee;
+      font-weight: 900;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      color: #ff1a1a;
+      transform: scale(1.2);
+    }
+
+    .movie-container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Ensure sidebar content is centered only for images/title, not infosection */
+    .sidebar {
+      width: 35%;
+      background-color: #141414;
+      border-right: 2px solid #ff1a1a;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    /* Keep image and title centered */
+    .sidebar img,
+    .sidebar h2 {
+      align-self: center;
+    }
+
+    .sidebar img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+      margin-top: 0;
+      margin-bottom: 38px;
+    }
+
+    .sidebar h2 {
+      color: #fffcd8;
+      font-size: 1.8rem;
+      font-family: 'Barlow Condensed', sans-serif;     
+      margin: 15px 0 10px;
+    }
+
+    .sidebar p {
+      font-size: .9rem;
+      color: #ddd;
+      line-height: 1.1 !important;
+      margin: 0 !important;
+      text-align: left !important;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: #0d0d0d;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #000;
+      border-radius: 10px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover {
+      background: #222;
+    }
+
+    /* 🎬 Ratings style (Men in Black only) */
+    .ratings {
+      display: flex;
+      justify-content: center;
+      gap: 42px;
+      /* bigger spacing */
+      margin-top: 12px;
+      font-size: 1.02rem;
+      margin-bottom: 48px;
+    }
+
+    .ratings,
+    .movieDescription,
+    .movieInfo p {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .ratings span {
+      display: inline-block;
+    }
+
+    .ratings .hd {
+      font-weight: bold;
+    }
+
+    .ratings .imdb {
+      color: #ffcc00;
+    }
+
+    .video-section {
+      flex: 1;
+      background-color: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+    }
+
+    .video-player {
+      width: 90%;
+      aspect-ratio: 16 / 9;
+      background-color: #111;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+    }
+
+    .video-player video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .featured-title {
+      margin-top: 15px;
+      font-size: 2rem;
+      color: #ff1a1a;
+    }
+
+    .featured-desc {
+      margin-top: 8px;
+      color: #ddd;
+      line-height: 1.6;
+      max-width: 85%;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .movie-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid #ff1a1a;
+        max-height: 40vh;
+      }
+
+
+
+      .video-section {
+        height: 60vh;
+      }
+
+      .video-player {
+        width: 95%;
+      }
+    }
+
+    .movieDescription {
+      margin-bottom: 20px;
+    }
+
+    .infoSection {
+      align-self: flex-start;
+      text-align: left;
+      padding-left: 15px;
+      font-family: 'roboto';
+    }
+
+    .ratings,
+    .movieDescription,
+    .movieInfo p {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .movieInfo {
+      color: #ccc;
+      line-height: 1.8 !important;
+      margin-top: 20px 0 !important;
+    }
+
+    .movieInfo p {
+      margin-top: 0 !important;
+      margin-bottom: 2px !important;
+      /* small gap between lines */
+      line-height: 1.8 !important;
+      /* force per paragraph */
+    }
+
+    .movieInfo strong {
+      color: #ff1a1a;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="back-btn" onclick="history.back()" title="Go Back">
+    <i class="fa-solid fa-angle-left"></i>
+  </button>
+
+  <div class="movie-container">
+    <div class="sidebar">
+      <img id="moviePoster" src="" alt="Movie Poster">
+      <h2 id="movieTitle">Movie Title</h2>
+      <div id="ratings" class="ratings"></div>
+
+      <div class="movieDescription">
+        <p id="movieDescription">Movie description will appear here.</p>
+      </div>
+      <div class="infosection">
+        <p id="movieInfo">
+          Released date:<br>
+          Genre:<br>
+          Director:<br>
+          Lead actors:
+        </p>
+      </div>
+    </div>
+
+    <div class="video-section">
+      <div class="video-player">
+        <video id="moviePreview" width="100%" height="100%" controls autoplay loop>
+          <source src="movies.mp4" type="video/mp4">
+        </video>
+      </div>
+      <h1 class="featured-title" id="featuredTitle">Featured Movie Title</h1>
+      <p class="featured-desc" id="featuredDesc">Featured movie description will appear here.</p>
+    </div>
+  </div>
+
+  <script>
+    const movies = {
+      loveuntangled: {
+        poster: "posters/love.jpg",
+        title: "Love Untangled",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "N/A", duration: "Varies" },
+        description: "Set in 1998 Busan, high-school student Park Se-ri struggles with insecurity over her frizzy hair and a secret crush on the popular Kim Hyun. When a new salon opens up and a transfer student Han Yoon-seok enters her life, Se-ri finds herself helping Yoon-seok’s mother (the salon owner) in order to get closer to Hyun and improve her self-image. Ultimately, she learns more about self-acceptance, friendship and what it really takes to confess love.",
+        released: "2025",
+        Genre: "RomCom",
+        Year: "2018",
+        Director: "Jane Smith",
+        leadactors: "Gong Myung, Shin Eun-soo, Cha Woo-mi",
+        preview: "videos/Love Untangled  Official Trailer  Netflix [ENG SUB] - Netflix K-Content (1080p, h264).mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      bridesmaid: {
+        poster: "posters/bridesmaids.jpg",
+        title: "Brides Maid",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.8", duration: "2h 5m" },
+        description: "Annie is a down-on-her-luck single woman who is asked to serve as maid of honor for her best friend Lillian. While she tries to pull off the role, she faces escalating personal and financial chaos, especially when a new bridesmaid Helen appears to upstage her. As the wedding approaches, Annie must contend with her own insecurities, rivalry, and the strain on her friendships—ultimately coming to terms with who she is and where her life is headed. ",
+        released: "May 13, 2011",
+        Genre: "RomCom",
+        Year: 2011,
+        Director: "Paul Feig",
+        leadactors: "Kristen Wiig, Maya Rudolph, Rose Byrne",
+        preview: "videos/Bridesmaids - Trailer - Universal Pictures (720p, h264).mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      onyourweddingday: {
+        poster: "posters/onourwedding.jpg",
+        title: "On Your Wedding Day",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:7.0", duration: "1h 50m" },
+        description: "Hwang Woo-yeon meets transfer student Hwan Seung-hee in high school and falls for her, though their timing and life paths don’t align. Over the next decade, their relationship weaves through friendship, separation and the question of whether first love remains meaningful. When Woo-yeon receives Seung-hee’s wedding invitation, he reflects on the years gone by, the roads not taken and how life’s changes affect love and memory.",
+        released: "August 22, 2018 (South Korea) ",
+        Genre: "RomCom",
+        Year: 2018,
+        Director: "Lee Seok-geun",
+        leadactors: "Park Bo-young, Kim Young-kwang",
+        preview: "videos/[너의 결혼식]  [On Your Wedding Day] Trailer (2018) - OPUS Pictures (720p, h264).mp4",
+        featuredTitle: "",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        featuredDesc: ""
+      },
+      bringherback: {
+        poster: "posters/bringing.jpg",
+        title: "Bring Her Back",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:4.6", duration: "1h 34m" },
+        description: "After the death of their father, step-siblings Andy and Piper are taken in by their new foster mother. They uncover disturbing occult rituals in their home, confronting grief, trauma and the supernatural consequences of longing to bring a loved one back. It’s a dark, unsettling horror story that explores how far people might go to reverse loss—and what horrors that might invite.",
+        released: "May 29/30, 2025",
+        Genre: "Horror",
+        Year: 2015,
+        Director: "Unknown",
+        leadactors: "Billy Barratt, Sora Wong, Sally Hawkins",
+        preview: "videos/Bring Her Back  Official Trailer HD  A24 - A24 (1080p, h264).mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      iknowwhatyoudidlastsummer: {
+        poster: "posters/iknow.jpg",
+        title: "I Know What You Did Last Summer",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:5.8", duration: "1h 41m" },
+        description: "Four teenage friends cover up what they believe is an accidental death after a reckless night. A year later, they’re haunted by a hook-wielding stranger who reminds them they didn’t get away with it. Tension, paranoia and guilt unravel as old secrets resurface and the rules of vengeance come into play.",
+        released: "October 17, 1997",
+        Genre: "Horror",
+        Year: 1997,
+        Director: "Jim Gillespie",
+        leadactors: "Jennifer Love Hewitt, Sarah Michelle Gellar, Ryan Phillippe, Freddie Prinze Jr.",
+        preview: "videos/I KNOW WHAT YOU DID LAST SUMMER - Official Trailer (HD) - Sony Pictures Entertainment (1080p, h264).mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      finaldestinationbloodlines: {
+        poster: "posters/final.jpg",
+        title: "Final Destination: Blood Lines",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "IMDB:6.7", duration: "1h 50m" },
+        description: "College student Stefani Reyes is plagued by nightmares of her grandparents’ death and returns home to uncover a generational curse tied to the inescapable design of Death. As her family’s fate becomes entwined with past events, she must figure out whether the cycle can be broken—or if they’re all already doomed.",
+        released: "May 16, 2025",
+        Genre: "Horror",
+        Year: "2006",
+        Director: "James Wong",
+        leadactors: "Kaitlyn Santa Juana, Richard Harmon, Anna Lore",
+        preview: "videos/Final Destination Bloodlines  Official Trailer - Warner Bros. (1080p, h264).mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      waybacklove: {
+        poster: "posters/waybacklove.jpg",
+        title: "Way Back Love",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "N/A", duration: "15–30m eps" },
+        description: " Jeong Hee-wan, aged 24, has lived withdrawn and directionless since childhood tragedy. Her childhood friend and first love Kim Ram-woo appears, but now as a grim reaper, telling her she has only a short time left. Together, they revisit their past, explore unfinished feelings and navigate the boundary between life and death in a bittersweet supernatural romance.",
+        released: "2025 (South Korea)",
+        Genre: "Drama",
+        Year: "2025",
+        Director: "Alyza Cruz",
+        leadactors: "Gong Myung, Kim Min-ha, Cha Woo-mi",
+        preview: "videos/[SUB] Way Back Love  Official Trailer  CJ ENM - CJ ENM Global (1080p, h264).mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      },
+      crushology101: {
+        poster: "posters/crush.jpg",
+        title: "Crushology 101",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "N/A", duration: "10–30m eps" },
+        description: " After a humiliating breakup, Bunny decides only to date handsome guys. But fate introduces four attractive boys into her life, each vying for her attention. Through comedy, embarrassment and romantic confusion, she begins to learn what love really means—beyond looks and first impressions.",
+        released: "April 11 – May 17, 2025 (South Korea)",
+        Genre: "Drama",
+        Year: "2025",
+        Director: "Alyza Cruz",
+        leadactors: " Roh Jeong-eui, Lee Chae-min, Jo Joon-young, Kim Hyun-jin",
+        preview: "videos/Crushology 101  Official Trailer  Roh Jeong Eui  Lee Chae Min ENG SUB - Lovebreak_Insights (1080p, h264).mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+
+      },
+      lovescout: {
+        poster: "posters/lovescout.jpg",
+        title: "Love Scout",
+        ratings: { hd: "HD", trailer: "🎥Trailer", imdb: "N/A", duration: "20-40m eps" },
+        description: "Kang Ji-yoon is the ambitious CEO of a head-hunting firm who’s mastered her job but knows little about life outside work. Yoo Eun-ho is her efficient secretary and a single father. As they navigate the competitive workplace, career challenges and personal vulnerabilities, they develop a deep and endearing bond. Their story is about balancing ambition with connection, duty with affection.",
+        released: "January 3 – February 14, 2025 (South Korea)",
+        Genre: "Drama",
+        Year: "2025",
+        Director: "Alyza Cruz",
+        leadactors: "Han Ji-min, Lee Joon-hyuk",
+        preview: "videos/Love Scout Official Trailer  SBS  AHA Media [ ENG SUB ] - AHA MEDIA OFFICIAL (1080p, h264).mp4",
+        featuredTitle: "",
+        featuredDesc: ""
+      }
+
+    };
+
+
+
+    const params = new URLSearchParams(window.location.search);
+    const movieID = params.get('movie');
+
+    const movie = movies[movieID] || movies['avengersendgame']; 
+
+
+    document.getElementById("moviePoster").src = movie.poster;
+    document.getElementById("movieTitle").textContent = movie.title;
+    document.getElementById("ratings").textContent = movie.ratings;
+    document.getElementById("movieDescription").textContent = movie.description;
+    document.getElementById("moviePreview").src = movie.preview;
+    document.getElementById("featuredTitle").textContent = movie.featuredTitle;
+    document.getElementById("featuredDesc").textContent = movie.featuredDesc;
+
+    if (movie.ratings) {
+      document.getElementById("ratings").innerHTML = `
+        <span class="hd">${movie.ratings.hd}</span>
+        <span>${movie.ratings.trailer}</span>
+        <span class="imdb">${movie.ratings.imdb}</span>
+        <span>${movie.ratings.duration}</span>
+      `;
+    } else {
+      document.getElementById("ratings").textContent = "";
+    }
+
+
+    document.getElementById("movieInfo").innerHTML = `
+      <p><strong>Released date:</strong> ${movie.released}</p>
+      <p><strong>Genre:</strong> ${movie.Genre}</p>
+      <p><strong>Director:</strong> ${movie.Director}</p>
+      <p><strong>Lead actors:</strong> ${movie.leadactors}</p>
+    `;
+  </script>
+</body>
+
+</html>
